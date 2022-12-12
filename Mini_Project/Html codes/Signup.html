@@ -7,8 +7,6 @@
     <title>Aircraft</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Header-Blue.css">
     <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
@@ -18,6 +16,7 @@
 </head>
 
 <body>
+
     <section class="register-photo">
         <div class="form-container">
             <div class="image-holder" style="background: url(&quot;assets/img/A3images.png&quot;) center / cover;"></div>
@@ -29,10 +28,94 @@
                     <div class="form-check"><label class="form-check-label"><input class="form-check-input" type="checkbox">I agree to the license terms.</label></div>
                 </div>
                 <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Sign Up</button></div><a class="already" href="Login.html">You already have an account? Login here.</a>
+                
+   
+                <script src="https://cdn.jsdelivr.net/npm/web3@1.2.8/dist/web3.js"></script>
+
+    <script>	
+	
+	var account;
+	window.addEventListener('load', async () => {
+		console.log("In Event Listener");
+	
+		if (typeof window.ethereum !== 'undefined') { 
+			console.log("MetaMask is Available :) !"); 
+			}
+			
+		// Modern DApp browsers
+		if (window.ethereum) {
+			window.web3 = new Web3(ethereum);
+						
+			// To Capture the account details from MetaMask
+			const accounts = await ethereum.enable();
+			account = accounts[0];
+				
+			}
+			console.log(account);
+
+                                abi = [
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "companyname",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "servicename",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "password",
+				"type": "string"
+			}
+		],
+		"name": "store_company",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+];
+
+contractaddress = '0xf1157f804688bf164e2D308647AE0b88002c4Bc7';
+var myContract = new web3.eth.Contract(abi,contractaddress, {from: account, gasPrice: '4000000000', gas: '8000000'});
+							
+var result = myContract.methods.store(44).send(function (err, result) {
+				
+		console.log("Result: ", result);
+			if (result) { console.log(result); }					
+		});			
+
+var result = myContract.methods.retrieve().call(function (err, result) {
+				
+		console.log("Result: ", result);
+			if (result) { console.log(result[0]); }					
+		});			
+
+		
+		
+    </script>	
+
+
             </form>
         </div>
     </section>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
 </body>
 
 </html>
